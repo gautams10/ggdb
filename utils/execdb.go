@@ -123,31 +123,16 @@ func HTTPDescribe(db *Db) http.Handler {
 }
 
 //HTTPSelect displays all rows in the database
-func HTTPSelect(db *Db) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		tableName := vars["tableName"]
-		val, err := db.DescribeTable(tableName)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(val)
-	})
-}
-
-//HTTPSelect displays all rows in the database
-func HTTPSelect(db *Db) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		vars := mux.Vars(r)
-		tableName := vars["tableName"]
-		val, err := db.SelectRow(tableName)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(val)
-	})
-}
+// func HTTPSelect(db *Db) http.Handler {
+// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// 		vars := mux.Vars(r)
+// 		tableName := vars["tableName"]
+// 		val, err := db.SelectRow(tableName)
+// 		if err != nil {
+// 			w.WriteHeader(http.StatusBadRequest)
+// 			return
+// 		}
+// 		w.WriteHeader(http.StatusOK)
+// 		json.NewEncoder(w).Encode(val)
+// 	})
+// }
