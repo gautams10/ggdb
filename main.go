@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"sync"
 
 	"github.com/gorilla/mux"
 )
@@ -15,16 +14,16 @@ func prompt() {
 	fmt.Printf("gg.db>")
 }
 
-func httpServe(wg *sync.WaitGroup, db *utils.Db) {
+func httpServe(db *utils.Db) {
 	r := mux.NewRouter()
 	r.Handle("/show", utils.HTTPShow(db))
 	r.Handle("/describe/{tableName}", utils.HTTPDescribe(db))
-	r.Handle("/select/{tableName}", utils.HTTPSelect(db))
-	r.Handle("/create/", utils.HTTPCreate(db))
+	//r.Handle("/select/{tableName}", utils.HTTPSelect(db))
+	//r.Handle("/create/", utils.HTTPCreate(db))
 	http.ListenAndServe(":8080", r)
 }
 
-func cliServe(wg *sync.WaitGroup, db *utils.Db) {
+func cliServe(db *utils.Db) {
 	reader := bufio.NewReader(os.Stdin)
 	for {
 		prompt()
@@ -60,11 +59,8 @@ func main() {
 	}
 	defer db.Close()
 	fmt.Println("Logged in to GG DB!")
-	var wg sync.WaitGroup
-	wg.Add(2)
-	go httpServe(&wg, db)
-	go cliServe(&wg, db)
-	wg.Wait()
+	go httpServe(db)
+	cliServe(db)
 }
 
 func checkError(err error) {
