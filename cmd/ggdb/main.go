@@ -2,10 +2,11 @@ package main
 
 import (
 	"bufio"
-	"db/utils"
 	"fmt"
 	"net/http"
 	"os"
+
+	"github.com/gautams10/ggdb/pkg/utils"
 
 	"github.com/gorilla/mux"
 )
