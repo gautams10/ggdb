@@ -1,1 +1,2 @@
-# ggdb - A simple heap based DB built in GO.
+**ggdb**
+A simple heap based db built in Go.
